@@ -1,0 +1,25 @@
+{
+	"name": "cb-cards-usage-analytics",
+	"version": "1.0.0",
+	"description": "Usage Analytics tracker for the codebeamer-miro plugin",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/C2H6Ethan/cb-cards-usage-analytics.git"
+	},
+	"author": "Ethan Baumgartner",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/C2H6Ethan/cb-cards-usage-analytics/issues"
+	},
+	"homepage": "https://github.com/C2H6Ethan/cb-cards-usage-analytics#readme",
+	"dependencies": {
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"mongoose": "^7.2.0",
+		"nodemon": "^2.0.22"
+	}
+}
