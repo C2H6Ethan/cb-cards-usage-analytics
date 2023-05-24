@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const action = new mongoose.Schema({
-	type: {
+const connection = new mongoose.Schema({
+	user: {
 		required: true,
 		type: String,
 	},
-	user: {
+	cbAddress: {
 		required: true,
 		type: String,
 	},
@@ -15,4 +15,4 @@ const action = new mongoose.Schema({
 	},
 });
 
-module.exports = mongoose.model('Data', action);
+module.exports = mongoose.model('Connection', connection);
