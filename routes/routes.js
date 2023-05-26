@@ -119,6 +119,7 @@ router.post('/connection', async (req, res) => {
 //Import Items Post Method
 router.post('/itemImport', async (req, res) => {
 	const itemImport = new itemImportModel({
+		items: req.body.items,
 		totalItems: req.body.totalItems,
 		user: req.body.user,
 		date: req.body.date,
