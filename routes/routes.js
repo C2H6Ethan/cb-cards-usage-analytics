@@ -6,9 +6,10 @@ const connectionModel = require('../models/connection');
 const userModel = require('../models/user');
 const itemImportModel = require('../models/itemImport');
 const errorModel = require('../models/error');
+const apiAuth = require('../auth/apiAuth');
 
 //Project loaded Post Method
-router.post('/project', async (req, res) => {
+router.post('/project', apiAuth, async (req, res) => {
 	const project = new projectModel({
 		cbAddress: req.body.cbAddress,
 		projectId: req.body.projectId,
@@ -26,7 +27,7 @@ router.post('/project', async (req, res) => {
 });
 
 //Page opened Post Method
-router.post('/page', async (req, res) => {
+router.post('/page', apiAuth, async (req, res) => {
 	const page = new pageModel({
 		name: req.body.name,
 		user: req.body.user,
@@ -42,7 +43,7 @@ router.post('/page', async (req, res) => {
 });
 
 //Connection Post Method
-router.post('/connection', async (req, res) => {
+router.post('/connection', apiAuth, async (req, res) => {
 	const connection = new connectionModel({
 		cbAddress: req.body.cbAddress,
 		user: req.body.user,
@@ -72,7 +73,7 @@ router.post('/connection', async (req, res) => {
 });
 
 //Import Items Post Method
-router.post('/itemImport', async (req, res) => {
+router.post('/itemImport', apiAuth, async (req, res) => {
 	const itemImport = new itemImportModel({
 		items: req.body.items,
 		totalItems: req.body.totalItems,
@@ -89,7 +90,7 @@ router.post('/itemImport', async (req, res) => {
 });
 
 //Error Post Method
-router.post('/error', async (req, res) => {
+router.post('/error', apiAuth, async (req, res) => {
 	const error = new errorModel({
 		message: req.body.message,
 		user: req.body.user,
@@ -105,7 +106,7 @@ router.post('/error', async (req, res) => {
 });
 
 //Get all Selected Projects Method
-router.get('/projects', async (req, res) => {
+router.get('/projects', apiAuth, async (req, res) => {
 	try {
 		const data = await projectModel.find();
 		res.json(data);
@@ -115,7 +116,7 @@ router.get('/projects', async (req, res) => {
 });
 
 //Get all Selected Projects Method
-router.get('/pages', async (req, res) => {
+router.get('/pages', apiAuth, async (req, res) => {
 	try {
 		const data = await pageModel.find();
 		res.json(data);
@@ -125,7 +126,7 @@ router.get('/pages', async (req, res) => {
 });
 
 //Get all Connections Method
-router.get('/connections', async (req, res) => {
+router.get('/connections', apiAuth, async (req, res) => {
 	try {
 		const data = await connectionModel.find();
 		res.json(data);
@@ -135,7 +136,7 @@ router.get('/connections', async (req, res) => {
 });
 
 //Get all Users Method
-router.get('/users', async (req, res) => {
+router.get('/users', apiAuth, async (req, res) => {
 	try {
 		const data = await userModel.find();
 		res.json(data);
@@ -145,7 +146,7 @@ router.get('/users', async (req, res) => {
 });
 
 //Get all Item Imports Method
-router.get('/itemImports', async (req, res) => {
+router.get('/itemImports', apiAuth, async (req, res) => {
 	try {
 		const data = await itemImportModel.find();
 		res.json(data);
@@ -155,7 +156,7 @@ router.get('/itemImports', async (req, res) => {
 });
 
 //Get all Errors Method
-router.get('/errors', async (req, res) => {
+router.get('/errors', apiAuth, async (req, res) => {
 	try {
 		const data = await errorModel.find();
 		res.json(data);
