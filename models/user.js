@@ -5,6 +5,10 @@ const user = new mongoose.Schema({
 		required: true,
 		type: String,
 	},
+	date: {
+		required: true,
+		type: Date,
+	},
 });
 
 module.exports = mongoose.model('User', user);

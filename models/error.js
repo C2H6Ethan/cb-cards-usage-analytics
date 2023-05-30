@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const action = new mongoose.Schema({
-	type: {
+const error = new mongoose.Schema({
+	message: {
 		required: true,
 		type: String,
 	},
@@ -15,4 +15,4 @@ const action = new mongoose.Schema({
 	},
 });
 
-module.exports = mongoose.model('Action', action);
+module.exports = mongoose.model('Error', error);

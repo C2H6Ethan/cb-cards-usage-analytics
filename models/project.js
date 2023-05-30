@@ -13,9 +13,13 @@ const project = new mongoose.Schema({
 		required: true,
 		type: String,
 	},
-	timesSelected: {
+	user: {
 		required: true,
-		type: Number,
+		type: String,
+	},
+	date: {
+		required: true,
+		type: Date,
 	},
 });
 

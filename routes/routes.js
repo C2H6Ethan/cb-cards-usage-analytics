@@ -1,89 +1,43 @@
 const express = require('express');
 const router = express.Router();
-const actionModel = require('../models/action');
 const projectModel = require('../models/project');
 const pageModel = require('../models/page');
 const connectionModel = require('../models/connection');
 const userModel = require('../models/user');
 const itemImportModel = require('../models/itemImport');
+const errorModel = require('../models/error');
 
-//Action Post Method
-router.post('/action', async (req, res) => {
-	const action = new actionModel({
-		type: req.body.type,
+//Project loaded Post Method
+router.post('/project', async (req, res) => {
+	const project = new projectModel({
+		cbAddress: req.body.cbAddress,
+		projectId: req.body.projectId,
+		projectLabel: req.body.projectLabel,
 		user: req.body.user,
 		date: req.body.date,
 	});
 
 	try {
-		const dataToSave = action.save();
+		const dataToSave = project.save();
 		res.status(200).json(dataToSave);
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
 });
 
-//Project loaded Post Method
-router.post('/project', async (req, res) => {
-	//check if project has already been selected before
-	const project = await projectModel.findOne({
-		projectId: req.body.projectId,
-	});
-
-	if (project) {
-		project.timesSelected += 1;
-
-		try {
-			const dataToSave = project.save();
-			res.status(200).json(dataToSave);
-		} catch (error) {
-			res.status(400).json({ message: error.message });
-		}
-	} else {
-		const project = new projectModel({
-			cbAddress: req.body.cbAddress,
-			projectId: req.body.projectId,
-			projectLabel: req.body.projectLabel,
-			timesSelected: 1,
-		});
-
-		try {
-			const dataToSave = project.save();
-			res.status(200).json(dataToSave);
-		} catch (error) {
-			res.status(400).json({ message: error.message });
-		}
-	}
-});
-
 //Page opened Post Method
 router.post('/page', async (req, res) => {
-	//check if project has already been selected before
-	const page = await pageModel.findOne({
+	const page = new pageModel({
 		name: req.body.name,
+		user: req.body.user,
+		date: req.body.date,
 	});
 
-	if (page) {
-		page.timesOpened += 1;
-
-		try {
-			const dataToSave = page.save();
-			res.status(200).json(dataToSave);
-		} catch (error) {
-			res.status(400).json({ message: error.message });
-		}
-	} else {
-		const page = new pageModel({
-			name: req.body.name,
-			timesOpened: 1,
-		});
-
-		try {
-			const dataToSave = page.save();
-			res.status(200).json(dataToSave);
-		} catch (error) {
-			res.status(400).json({ message: error.message });
-		}
+	try {
+		const dataToSave = page.save();
+		res.status(200).json(dataToSave);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
 	}
 });
 
@@ -110,6 +64,7 @@ router.post('/connection', async (req, res) => {
 	if (!user) {
 		const user = new userModel({
 			name: req.body.user,
+			date: new Date(),
 		});
 
 		user.save();
@@ -133,13 +88,19 @@ router.post('/itemImport', async (req, res) => {
 	}
 });
 
-//Get all Actions Method
-router.get('/actions', async (req, res) => {
+//Error Post Method
+router.post('/error', async (req, res) => {
+	const error = new errorModel({
+		message: req.body.message,
+		user: req.body.user,
+		date: req.body.date,
+	});
+
 	try {
-		const data = await actionModel.find();
-		res.json(data);
+		const dataToSave = error.save();
+		res.status(200).json(dataToSave);
 	} catch (error) {
-		res.status(500).json({ message: error.message });
+		res.status(400).json({ message: error.message });
 	}
 });
 
@@ -187,6 +148,16 @@ router.get('/users', async (req, res) => {
 router.get('/itemImports', async (req, res) => {
 	try {
 		const data = await itemImportModel.find();
+		res.json(data);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+
+//Get all Errors Method
+router.get('/errors', async (req, res) => {
+	try {
+		const data = await errorModel.find();
 		res.json(data);
 	} catch (error) {
 		res.status(500).json({ message: error.message });

@@ -5,9 +5,13 @@ const page = new mongoose.Schema({
 		required: true,
 		type: String,
 	},
-	timesOpened: {
+	user: {
 		required: true,
-		type: Number,
+		type: String,
+	},
+	date: {
+		required: true,
+		type: Date,
 	},
 });
 
