@@ -4,7 +4,7 @@
 	"description": "Usage Analytics tracker for the codebeamer-miro plugin",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon index.js"
+		"start": "nodemon index.js && (cd data-visualization-tool && npm start)"
 	},
 	"repository": {
 		"type": "git",
