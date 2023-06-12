@@ -18,11 +18,28 @@ router.post('/project', apiAuth, async (req, res) => {
 		date: req.body.date,
 	});
 
-	try {
-		const dataToSave = project.save();
-		res.status(200).json(dataToSave);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
+	//Handling validation errors
+	const givenParams = Object.keys(req.body);
+	const allowedParams = [
+		'cbAddress',
+		'projectId',
+		'projectLabel',
+		'user',
+		'date',
+	];
+	const validParams = givenParams.every((param) =>
+		allowedParams.includes(param)
+	);
+
+	const reverseValidParams = allowedParams.every((param) =>
+		givenParams.includes(param)
+	);
+
+	if (validParams && reverseValidParams) {
+		project.save();
+		res.status(200).json({ message: 'Project added successfully' });
+	} else {
+		res.status(400).json({ message: 'Wrong properties passed!' });
 	}
 });
 
@@ -34,11 +51,22 @@ router.post('/page', apiAuth, async (req, res) => {
 		date: req.body.date,
 	});
 
-	try {
-		const dataToSave = page.save();
-		res.status(200).json(dataToSave);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
+	//Handling validation errors
+	const givenParams = Object.keys(req.body);
+	const allowedParams = ['name', 'user', 'date'];
+	const validParams = givenParams.every((param) =>
+		allowedParams.includes(param)
+	);
+
+	const reverseValidParams = allowedParams.every((param) =>
+		givenParams.includes(param)
+	);
+
+	if (validParams && reverseValidParams) {
+		page.save();
+		res.status(200).json({ message: 'Page added successfully' });
+	} else {
+		res.status(400).json({ message: 'Wrong properties passed!' });
 	}
 });
 
@@ -50,25 +78,37 @@ router.post('/connection', apiAuth, async (req, res) => {
 		date: req.body.date,
 	});
 
-	try {
-		const dataToSave = connection.save();
-		res.status(200).json(dataToSave);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
+	//Handling validation errors
+	const givenParams = Object.keys(req.body);
+	const allowedParams = ['cbAddress', 'user', 'date'];
+	const validParams = givenParams.every((param) =>
+		allowedParams.includes(param)
+	);
 
-	//check if user exists in user collection
-	const user = await userModel.findOne({
-		name: req.body.user,
-	});
+	const reverseValidParams = allowedParams.every((param) =>
+		givenParams.includes(param)
+	);
 
-	if (!user) {
-		const user = new userModel({
+	if (validParams && reverseValidParams) {
+		connection.save();
+
+		//check if user exists in user collection
+		const user = await userModel.findOne({
 			name: req.body.user,
-			date: new Date(),
 		});
 
-		user.save();
+		if (!user) {
+			const user = new userModel({
+				name: req.body.user,
+				date: new Date(),
+			});
+
+			user.save();
+		}
+
+		res.status(200).json({ message: 'Connection added successfully' });
+	} else {
+		res.status(400).json({ message: 'Wrong properties passed!' });
 	}
 });
 
@@ -81,11 +121,22 @@ router.post('/itemImport', apiAuth, async (req, res) => {
 		date: req.body.date,
 	});
 
-	try {
-		const dataToSave = itemImport.save();
-		res.status(200).json(dataToSave);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
+	//Handling validation errors
+	const givenParams = Object.keys(req.body);
+	const allowedParams = ['items', 'totalItems', 'user', 'date'];
+	const validParams = givenParams.every((param) =>
+		allowedParams.includes(param)
+	);
+
+	const reverseValidParams = allowedParams.every((param) =>
+		givenParams.includes(param)
+	);
+
+	if (validParams && reverseValidParams) {
+		itemImport.save();
+		res.status(200).json({ message: 'ItemImport added successfully' });
+	} else {
+		res.status(400).json({ message: 'Wrong properties passed!' });
 	}
 });
 
@@ -97,11 +148,22 @@ router.post('/error', apiAuth, async (req, res) => {
 		date: req.body.date,
 	});
 
-	try {
-		const dataToSave = error.save();
-		res.status(200).json(dataToSave);
-	} catch (error) {
-		res.status(400).json({ message: error.message });
+	//Handling validation errors
+	const givenParams = Object.keys(req.body);
+	const allowedParams = ['message', 'user', 'date'];
+	const validParams = givenParams.every((param) =>
+		allowedParams.includes(param)
+	);
+
+	const reverseValidParams = allowedParams.every((param) =>
+		givenParams.includes(param)
+	);
+
+	if (validParams && reverseValidParams) {
+		error.save();
+		res.status(200).json({ message: 'Error added successfully' });
+	} else {
+		res.status(400).json({ message: 'Wrong properties passed!' });
 	}
 });
 
@@ -162,6 +224,24 @@ router.get('/errors', apiAuth, async (req, res) => {
 		res.json(data);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
+	}
+});
+
+//Delete Project Method
+router.delete('/project/:id', apiAuth, async (req, res) => {
+	try {
+		const id = req.params.id;
+		const deletedProject = await projectModel.findOneAndDelete({ _id: id });
+
+		if (!deletedProject) {
+			return res.status(404).json({ message: 'Project not found' });
+		}
+
+		return res
+			.status(200)
+			.json({ message: 'Project deleted successfully' });
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
 	}
 });
 
