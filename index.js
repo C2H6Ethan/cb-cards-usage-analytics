@@ -1,35 +1,9 @@
 require('dotenv').config();
 
-const express = require('express');
-const mongoose = require('mongoose');
-const mongoString = process.env.DATABASE_URL;
-const routes = require('./routes/routes');
-const path = require('path');
-var cors = require('cors');
+const app = require('./app');
 
-mongoose.connect(mongoString);
-const database = mongoose.connection;
+const port = process.env.PORT || 8080;
 
-database.on('error', (error) => {
-	console.log(error);
-});
-
-database.once('connected', () => {
-	console.log('Database Connected');
-});
-const app = express();
-
-app.use(cors());
-
-app.use(express.json());
-
-app.use('/api', routes);
-
-app.use(
-	express.static(path.join(__dirname, 'data-visualization-tool', 'build'))
-);
-app.use(express.static('public'));
-
-app.listen(3001, () => {
-	console.log(`Server Started at ${3001}`);
+app.listen(port, () => {
+	console.log(`Server Started at ${port}`);
 });
