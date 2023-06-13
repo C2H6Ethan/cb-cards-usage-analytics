@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import '../App.css';
 
 const baseURL = 'http://localhost:3001/api';
 

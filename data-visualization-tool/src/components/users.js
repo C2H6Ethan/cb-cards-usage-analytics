@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import '../App.css';
 
 const baseURL = 'http://localhost:3001/api';
 
@@ -20,12 +19,12 @@ function Users() {
 	}, []);
 
 	async function getUsers() {
-		const res = await axios(baseURL + '/users', config);
+		const res = await axios.get(baseURL + '/users', config);
 		setUsers(res.data);
 	}
 	return (
 		<div>
-			<h2>Users ({users.length})</h2>
+			<h2 data-testid="usersTitle">Users ({users.length})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
@@ -36,10 +35,10 @@ function Users() {
 				</thead>
 				<tbody>
 					{users.map((_, index) => (
-						<tr>
+						<tr key={index}>
 							<th>{index + 1}</th>
-							<td key={index}>{users[index].name}</td>
-							<td key={index}>{users[index].date}</td>
+							<td>{users[index].name}</td>
+							<td>{users[index].date}</td>
 						</tr>
 					))}
 				</tbody>
