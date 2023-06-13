@@ -19,12 +19,12 @@ function Projects() {
 	}, []);
 
 	async function getProjects() {
-		const res = await axios(baseURL + '/projects', config);
+		const res = await axios.get(baseURL + '/projects', config);
 		setProjects(res.data);
 	}
 	return (
 		<div>
-			<h2>Projects ({projects.length})</h2>
+			<h2 data-testid="title">Projects ({projects.length})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
@@ -38,13 +38,13 @@ function Projects() {
 				</thead>
 				<tbody>
 					{projects.map((_, index) => (
-						<tr>
+						<tr key={index}>
 							<th>{index + 1}</th>
-							<td key={index}>{projects[index].projectLabel}</td>
-							<td key={index}>{projects[index].projectId}</td>
-							<td key={index}>{projects[index].user}</td>
-							<td key={index}>{projects[index].date}</td>
-							<td key={index}>{projects[index].cbAddress}</td>
+							<td>{projects[index].projectLabel}</td>
+							<td>{projects[index].projectId}</td>
+							<td>{projects[index].user}</td>
+							<td>{projects[index].date}</td>
+							<td>{projects[index].cbAddress}</td>
 						</tr>
 					))}
 				</tbody>
