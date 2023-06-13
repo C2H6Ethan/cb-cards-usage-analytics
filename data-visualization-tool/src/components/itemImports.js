@@ -21,7 +21,7 @@ function ItemImports() {
 
 	async function getItemImports() {
 		let totalItemsImported = 0;
-		const res = await axios(baseURL + '/itemImports', config);
+		const res = await axios.get(baseURL + '/itemImports', config);
 		const data = res.data;
 		data.forEach((itemImport) => {
 			totalItemsImported += itemImport.totalItems;
@@ -31,7 +31,7 @@ function ItemImports() {
 	}
 	return (
 		<div>
-			<h2>Items Imported ({totalItemsImported})</h2>
+			<h2 data-testid="title">Items Imported ({totalItemsImported})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
@@ -43,11 +43,11 @@ function ItemImports() {
 				</thead>
 				<tbody>
 					{itemImports.map((_, index) => (
-						<tr>
+						<tr key={index}>
 							<th>{index + 1}</th>
-							<td key={index}>{itemImports[index].user}</td>
-							<td key={index}>{itemImports[index].totalItems}</td>
-							<td key={index}>{itemImports[index].date}</td>
+							<td>{itemImports[index].user}</td>
+							<td>{itemImports[index].totalItems}</td>
+							<td>{itemImports[index].date}</td>
 						</tr>
 					))}
 				</tbody>

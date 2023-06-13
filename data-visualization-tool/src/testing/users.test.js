@@ -1,12 +1,11 @@
-import { create, act } from 'react-test-renderer';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Users from '../components/users';
 import axios from 'axios';
 
 const users = [
 	{ name: 'test user', date: new Date().toString() },
-	{ name: 'test user 2', date: new Date().toString() },
+	{ name: 'test user', date: new Date().toString() },
 ];
 const resp = { data: users };
 

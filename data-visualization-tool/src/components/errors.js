@@ -19,12 +19,12 @@ function Errors() {
 	}, []);
 
 	async function getErrors() {
-		const res = await axios(baseURL + '/errors', config);
+		const res = await axios.get(baseURL + '/errors', config);
 		setErrors(res.data);
 	}
 	return (
 		<div>
-			<h2>Errors ({errors.length})</h2>
+			<h2 data-testid="title">Errors ({errors.length})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
@@ -36,11 +36,11 @@ function Errors() {
 				</thead>
 				<tbody>
 					{errors.map((_, index) => (
-						<tr>
+						<tr key={index}>
 							<th>{index + 1}</th>
-							<td key={index}>{errors[index].message}</td>
-							<td key={index}>{errors[index].user}</td>
-							<td key={index}>{errors[index].date}</td>
+							<td>{errors[index].message}</td>
+							<td>{errors[index].user}</td>
+							<td>{errors[index].date}</td>
 						</tr>
 					))}
 				</tbody>

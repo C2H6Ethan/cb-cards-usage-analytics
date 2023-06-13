@@ -19,12 +19,12 @@ function Pages() {
 	}, []);
 
 	async function getPages() {
-		const res = await axios(baseURL + '/pages', config);
+		const res = await axios.get(baseURL + '/pages', config);
 		setPages(res.data);
 	}
 	return (
 		<div>
-			<h2>Pages ({pages.length})</h2>
+			<h2 data-testid="title">Pages ({pages.length})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
@@ -36,11 +36,11 @@ function Pages() {
 				</thead>
 				<tbody>
 					{pages.map((_, index) => (
-						<tr>
+						<tr key={index}>
 							<th>{index + 1}</th>
-							<td key={index}>{pages[index].name}</td>
-							<td key={index}>{pages[index].user}</td>
-							<td key={index}>{pages[index].date}</td>
+							<td>{pages[index].name}</td>
+							<td>{pages[index].user}</td>
+							<td>{pages[index].date}</td>
 						</tr>
 					))}
 				</tbody>

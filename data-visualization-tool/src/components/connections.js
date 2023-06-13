@@ -19,12 +19,12 @@ function Connections() {
 	}, []);
 
 	async function getConnections() {
-		const res = await axios(baseURL + '/connections', config);
+		const res = await axios.get(baseURL + '/connections', config);
 		setConnections(res.data);
 	}
 	return (
 		<div>
-			<h2>Connections ({connections.length})</h2>
+			<h2 data-testid="title">Connections ({connections.length})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
@@ -36,11 +36,11 @@ function Connections() {
 				</thead>
 				<tbody>
 					{connections.map((_, index) => (
-						<tr>
+						<tr key={index}>
 							<th>{index + 1}</th>
-							<td key={index}>{connections[index].user}</td>
-							<td key={index}>{connections[index].cbAddress}</td>
-							<td key={index}>{connections[index].date}</td>
+							<td>{connections[index].user}</td>
+							<td>{connections[index].cbAddress}</td>
+							<td>{connections[index].date}</td>
 						</tr>
 					))}
 				</tbody>
