@@ -1,4 +1,6 @@
 import { create, act } from 'react-test-renderer';
+import { render, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Users from '../components/users';
 import axios from 'axios';
 
@@ -14,7 +16,15 @@ mockAxiosGet.mockResolvedValue(resp);
 
 it('renders correctly', async () => {
 	// render the component
-	act(() => {
-		create(<Users />);
-	});
+	render(<Users />);
+});
+
+it('contains the amount of users in the title', async () => {
+	// render the component
+	render(<Users />);
+
+	// check if the users length is in the title
+	expect(await screen.findByTestId('title')).toHaveTextContent(
+		`Users (${users.length})`
+	);
 });

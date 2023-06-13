@@ -24,7 +24,7 @@ function Users() {
 	}
 	return (
 		<div>
-			<h2 data-testid="usersTitle">Users ({users.length})</h2>
+			<h2 data-testid="title">Users ({users.length})</h2>
 			<Table bordered responsive>
 				<thead>
 					<tr>
